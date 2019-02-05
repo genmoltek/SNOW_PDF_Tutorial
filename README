@@ -10,3 +10,4 @@ See the sample pdf he provides "TestFormDylanLindgrenCom"
 See my Powerpoint-ish tutorial slides explaining how to find/download/install the SNOW PDF Generator project.
 See my Powerpoint-ish tutorial on an online article showing how to use 3 lines of code to modify and attach a PDF to a record.
 
+The .XML file is how ServiceNow manages an entire Unit of Work for backing-up / re-installing changeds. (essentially a branch).
