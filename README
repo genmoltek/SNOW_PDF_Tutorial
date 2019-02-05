@@ -1,0 +1,12 @@
+This is my SNOW Tutorial for PDF Creation/Editing using the ServiceNow Plugin for PDFGenerator.
+It's supposed to be able to create a PDF (from scratch) by leveraging an existing HTML Document Template.
+But that seems to always involve the HR Application for SNOW.  (Full Blown, Install, and $$$ Contract).
+
+Not entirely sure how to build a Fillable-PDF from scratch otherwise.
+But there is a website with a Tutorial.. that includes a Fillable PDF that can be used.
+https://www.dylanlindgren.com/2017/09/30/filling-pdf-forms-in-servicenow/
+
+See the sample pdf he provides "TestFormDylanLindgrenCom"
+See my Powerpoint-ish tutorial slides explaining how to find/download/install the SNOW PDF Generator project.
+See my Powerpoint-ish tutorial on an online article showing how to use 3 lines of code to modify and attach a PDF to a record.
+
