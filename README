@@ -11,3 +11,5 @@ See my Powerpoint-ish tutorial slides explaining how to find/download/install th
 See my Powerpoint-ish tutorial on an online article showing how to use 3 lines of code to modify and attach a PDF to a record.
 
 The .XML file is how ServiceNow manages an entire Unit of Work for backing-up / re-installing changeds. (essentially a branch).
+So the .XML file (in this case) IS the actual PDF Project that would be downloaded from GITHUB and then used to INSTALL into SNOW.
+
