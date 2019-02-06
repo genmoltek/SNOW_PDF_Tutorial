@@ -26,6 +26,19 @@ jQuery('#getFieldTypes').click(function () {
 	ga.getXML(pdfFieldTypesCallback);
 });
 
+jQuery('#fillInFields').click(function () {
+	var ga = new GlideAjax(myPDFScriptIncludeName); //this is server side object name 
+	var methodNameToCall = 'fillInPDFForm';
+	ga.addParam('sysparm_name',methodNameToCall); //this is the method name to call on the object
+	ga.addParam('sysparm_incidentRecordId', myHardcodedIncidentRecordId);
+	ga.addParam('sysparm_pdfAttachmentRecordId', myHardcodedPdfAttachementRecordId);
+	ga.getXML(pdfFieldTypesCallback);
+});
+
+
+
+
+
 //MUST ALWAYS use a lower-case 'j' in  jQuery calls.    Otherwise can fail silently (or barely noticeable in the Dev Console of the Browser...)
 function pdfFieldNamesCallback(response) {
 	var answer = response.responseXML.documentElement.getAttribute('answer');
@@ -47,11 +60,12 @@ function pdfFieldTypesCallback(response) {
 	<div>Hello from my PDF Generator Tutorial Page</div>
 	<div>   </div>
 
-	<div><button id="getFieldNames" class="btn btn-default">GetPDF FieldNames</button></div>
-	<div><button id="getFieldTypes" class="btn btn-default">GetPDF FieldTypes</button></div>
+	<div><button id="getFieldNames" class="btn btn-default">Get PDF Field Names</button></div>
+	<div><button id="getFieldTypes" class="btn btn-default">Get PDF Field Types</button></div>
+	<div><button id="fillInFields"  class="btn btn-default">Fill In PDF Fields</button></div>
 
 	<div>---</div>
-	<div id="msg">My Message Div</div>
+	<div id="msg"></div>
 	<div>---</div>
 </j:jelly>]]></html>
         <name>My PDF Generation Tutorial Page</name>
@@ -60,13 +74,13 @@ function pdfFieldTypesCallback(response) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-05 17:37:48</sys_created_on>
         <sys_id>f2273f7fdb532300fc2011203996198a</sys_id>
-        <sys_mod_count>21</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>My PDF Generation Tutorial Page</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_ui_page_f2273f7fdb532300fc2011203996198a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-06 18:54:34</sys_updated_on>
+        <sys_updated_on>2019-02-06 19:13:13</sys_updated_on>
     </sys_ui_page>
 </record_update>
