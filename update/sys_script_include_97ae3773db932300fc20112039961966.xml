@@ -7,31 +7,27 @@
         <client_callable>true</client_callable>
         <description/>
         <name>myPDFGeneratorScriptInclude</name>
-        <script><![CDATA[/**********
-var myPDFGeneratorScriptInclude = Class.create();
-myPDFGeneratorScriptInclude.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
-	modifyAndAttachPDF: function() {
-		var record_sysid = this.getParameter('sysparm_my_own_parameter_1');
-		return "Hello World! with sysid from ajax request: " + record_sysid;
-	},
-    type: 'myPDFGeneratorScriptInclude',
-});
-****************/
-gs.info("I am in my Script Include at time: " + new GlideDateTime().getDisplayValue());
+        <script><![CDATA[gs.info("=============== DERPY TIME START: " + new GlideDateTime().getDisplayValue());
 var tablename = 'incident';
-var pdfDocumentName = 'myGeneratedPDFFile';
+var templateName = '';
+var pdfOutputName = 'myGeneratedPDFFile';
 var myPDFGeneratorScriptInclude = Class.create();
 myPDFGeneratorScriptInclude.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     type: 'myPDFGeneratorScriptInclude',
 	modifyAndAttachPDF: function() {
-		gs.info("Inside scriptinclude function: modifyAndAttachPDF()....");
-		var record_sysid = this.getParameter('sysparm_my_own_parameter_1');
-		gs.info("RecordSysId To Modify: " + record_sysid);
-		var gdf = new GeneralDocFormv2("My Generated PDF", tablename, record_sysid, pdfDocumentName);
-		gs.info("Constructed the GeneralDocForm2 Object....");
-		gdf.generate();
-		gs.info("Called Generate().  Now Returning From AJAX Call.");
-		return "PDF Filename: " + pdfDocumentName + " is attached to RecordID: " + record_sysid;
+		gs.info("DERP A: " + new GlideDateTime().getDisplayValue());
+		var pdf = new global.GeneralPdfUtils();
+		gs.info("DERP B: " + new GlideDateTime().getDisplayValue());
+		var incidentSysId = 'd71f7935c0a8016700802b64c67c11c6';
+		var attachmentSysId = '52e6f77fdb532300fc20112039961907';
+		gs.info("DERP C: " + new GlideDateTime().getDisplayValue());
+		var fieldsString = pdf.getPDFFields(attachmentSysId);
+		gs.info("DERP D: " + new GlideDateTime().getDisplayValue());
+		var fields = JSON.parse(fieldsString);	
+		gs.info("DERP E: " + new GlideDateTime().getDisplayValue());
+		gs.info("PDF Contents: " + fields);
+		gs.info("=============== DERPY TIME STOP: " + new GlideDateTime().getDisplayValue());		
+		return fields;
 	}
 });
 ]]></script>
@@ -39,13 +35,13 @@ myPDFGeneratorScriptInclude.prototype = Object.extendsObject(global.AbstractAjax
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-05 18:15:23</sys_created_on>
         <sys_id>97ae3773db932300fc20112039961966</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>myPDFGeneratorScriptInclude</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_script_include_97ae3773db932300fc20112039961966</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-06 15:50:22</sys_updated_on>
+        <sys_updated_on>2019-02-06 17:20:40</sys_updated_on>
     </sys_script_include>
 </record_update>
