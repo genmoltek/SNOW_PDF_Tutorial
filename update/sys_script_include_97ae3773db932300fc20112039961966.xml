@@ -7,8 +7,7 @@
         <client_callable>true</client_callable>
         <description/>
         <name>myPDFGeneratorScriptInclude</name>
-        <script><![CDATA[gs.info("=============== DERPY TIME START: " + new GlideDateTime().getDisplayValue());
-var tablename = 'incident';
+        <script><![CDATA[var tablename = 'incident';
 var templateName = '';
 var pdfOutputName = 'myGeneratedPDFFile';
 var incidentSysId = 'd71f7935c0a8016700802b64c67c11c6'; 
@@ -18,30 +17,36 @@ var myPDFGeneratorScriptInclude = Class.create();
 myPDFGeneratorScriptInclude.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     type: 'myPDFGeneratorScriptInclude',
 	getPDFFieldNames: function() {
-		gs.info("DERP A1: " + new GlideDateTime().getDisplayValue());
+		gs.info("A1: " + new GlideDateTime().getDisplayValue());
 		var pdf = new global.GeneralPdfUtils();
-		gs.info("DERP A2: " + new GlideDateTime().getDisplayValue());
+		gs.info("A2: " + new GlideDateTime().getDisplayValue());
 		var fieldsString = pdf.getPDFFields(attachmentSysId);
-		gs.info("DERP A3: " + new GlideDateTime().getDisplayValue());
+		gs.info("A3: " + new GlideDateTime().getDisplayValue());
 		var fields = JSON.parse(fieldsString);	
-		gs.info("DERP A4: " + new GlideDateTime().getDisplayValue());
+		gs.info("A4: " + new GlideDateTime().getDisplayValue());
 		var answer = JSON.stringify(fields);
-		gs.info("DERP A5: PDF Contents: " + answer);
+		gs.info("A5: PDF Contents: " + answer);
 		return answer;
 	},
 	getPDFFieldTypes: function () {
-		gs.info("DERP B1: " + new GlideDateTime().getDisplayValue());
+		gs.info("B1: " + new GlideDateTime().getDisplayValue());
 		var pdf = new global.GeneralPdfUtils();
-		gs.info("DERP B2: " + new GlideDateTime().getDisplayValue());
+		gs.info("B2: " + new GlideDateTime().getDisplayValue());
 		var fieldTypesString = pdf.getFieldType(attachmentSysId);
-		gs.info("DERP B3: " + new GlideDateTime().getDisplayValue());
+		gs.info("B3: " + new GlideDateTime().getDisplayValue());
 		var fieldTypes = JSON.parse(fieldTypesString);
-		gs.info("DERP B4:  PDF FieldTypes : " + fieldTypesString + new GlideDateTime().getDisplayValue());
+		gs.info("B4:  PDF FieldTypes : " + fieldTypesString + new GlideDateTime().getDisplayValue());
 		answer = fieldTypesString;
 		return answer;
 	},
 	fillInPDFForm: function() {
+		var destinationTableName = tablename;
+		var destinationTableSysId = incidentSysId;
+		var pdfName = pdfOutputName + "_" + new GlideDateTime().getDisplayValue();		
+		
+		gs.info("C1: " + new GlideDateTime().getDisplayValue());
 		var pdf = new global.GeneralPdfUtils();
+		gs.info("C2: " + new GlideDateTime().getDisplayValue());
 		var jsonObject = {
 			   "Read Terms and Conditions": "Yes",
 			   "First name" : "Ahnold",
@@ -49,10 +54,9 @@ myPDFGeneratorScriptInclude.prototype = Object.extendsObject(global.AbstractAjax
 			   "Last name"  : "Shawzenaygar"
 		};
 		var jsonString = JSON.stringify(jsonObject);
-		var destinationTableName = tablename;
-		var destinationTableSysId = incidentSysId;
-		var pdfName = pdfOutputName + "_" + new GlideDateTime().getDisplayValue();
+		gs.info("C3: " + new GlideDateTime().getDisplayValue());
 		pdf.prefillPdf(jsonString, destinationTableSysId, attachmentSysId, destinationTableName, pdfName);		
+		gs.info("C4: " + new GlideDateTime().getDisplayValue());
 	}
 });
 ]]></script>
@@ -60,13 +64,13 @@ myPDFGeneratorScriptInclude.prototype = Object.extendsObject(global.AbstractAjax
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-05 18:15:23</sys_created_on>
         <sys_id>97ae3773db932300fc20112039961966</sys_id>
-        <sys_mod_count>21</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>myPDFGeneratorScriptInclude</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_script_include_97ae3773db932300fc20112039961966</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-06 19:11:27</sys_updated_on>
+        <sys_updated_on>2019-02-06 19:17:32</sys_updated_on>
     </sys_script_include>
 </record_update>
