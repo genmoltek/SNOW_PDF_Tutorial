@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_app_application">
+    <sys_app_application action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category/>
+        <description/>
+        <device_type>browser</device_type>
+        <hint/>
+        <name>MyPDFGeneratorTutorial</name>
+        <order/>
+        <roles>x_237223_mypdfgene.user</roles>
+        <sys_class_name>sys_app_application</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-05 15:44:50</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>8b6d93b3db532300fc20112039961967</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>MyPDFGeneratorTutorial</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>sys_app_application_8b6d93b3db532300fc20112039961967</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-05 15:44:50</sys_updated_on>
+        <title>MyPDFGeneratorTutorial</title>
+        <view_name/>
+    </sys_app_application>
+</record_update>

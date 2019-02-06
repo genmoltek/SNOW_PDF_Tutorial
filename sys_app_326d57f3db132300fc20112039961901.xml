@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_app">
+    <sys_app action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <enforce_license>log</enforce_license>
+        <js_level>helsinki_es5</js_level>
+        <licensable>true</licensable>
+        <license_model>none</license_model>
+        <logo/>
+        <menu display_value="MyPDFGeneratorTutorial">8b6d93b3db532300fc20112039961967</menu>
+        <name>MyPDFGeneratorTutorial</name>
+        <private>false</private>
+        <restrict_table_access>false</restrict_table_access>
+        <runtime_access_tracking>permissive</runtime_access_tracking>
+        <scope>x_237223_mypdfgene</scope>
+        <scoped_administration>false</scoped_administration>
+        <short_description/>
+        <source>x_237223_mypdfgene</source>
+        <store_correlation_id/>
+        <store_url/>
+        <sys_class_name>sys_app</sys_class_name>
+        <sys_code/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-05 15:44:50</sys_created_on>
+        <sys_id>326d57f3db132300fc20112039961901</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-05 15:44:50</sys_updated_on>
+        <template/>
+        <trackable>true</trackable>
+        <user_role display_value="x_237223_mypdfgene.user" name="x_237223_mypdfgene.user">076d93b3db532300fc2011203996196a</user_role>
+        <vendor/>
+        <vendor_prefix/>
+        <version>1.0.0</version>
+    </sys_app>
+</record_update>

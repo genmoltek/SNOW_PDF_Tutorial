@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_wizard_answer">
+    <sys_wizard_answer action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <answer>Signature Task</answer>
+        <button_label/>
+        <dependent_value/>
+        <element/>
+        <name>Signature Task</name>
+        <next_question/>
+        <order>100</order>
+        <payload_name/>
+        <question display_value="Task" name="Task">8ef6d676a910230059a645cf8028ebb7</question>
+        <roles/>
+        <script/>
+        <sys_class_name>sys_wizard_answer</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-05 17:31:21</sys_created_on>
+        <sys_id>1bc53f3fdb532300fc20112039961930</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Signature Task</sys_name>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>sys_wizard_answer_1bc53f3fdb532300fc20112039961930</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-05 17:31:21</sys_updated_on>
+        <table/>
+        <target_url>u_sig_task.do</target_url>
+        <type>1</type>
+    </sys_wizard_answer>
+</record_update>

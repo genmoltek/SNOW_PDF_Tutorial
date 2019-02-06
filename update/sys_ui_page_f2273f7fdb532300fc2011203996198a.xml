@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[//NOTE: To directly access the record Use this URL:
+//https://dev65352.service-now.com/incident.do?sys_id=d71f7935c0a8016700802b64c67c11c6
+
+jQuery('#myModifyAndAttachPDFButton').click(function () {
+	var myHardcodedIncidentRecordName = "d71f7935c0a8016700802b64c67c11c6";
+	var ga = new GlideAjax('myPDFGeneratorScriptInclude'); //this is server side object name 
+	ga.addParam('sysparm_name','modifyAndAttachPDF'); //this is the method name to call on the object
+	ga.addParam('sysparm_my_own_parameter_1', myHardcodedIncidentRecordName);
+	ga.getXML(pdfGeneratedCallback);
+
+});
+
+//MUST ALWAYS use a lower-case 'j' in  jQuery calls.    Otherwise can fail silently (or barely noticeable in the Dev Console of the Browser...)
+function pdfGeneratedCallback(response) {
+	var answer = response.responseXML.documentElement.getAttribute('answer');
+	jQuery("#msg").append("<p> PDF has been created. Content From Server: ").append(answer).append("</p>");
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_237223_mypdfgene_My PDF Generation Tutorial Page.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<div>Hello from my PDF Generator Tutorial Page</div>
+	<div>   </div>
+
+	<button id="myModifyAndAttachPDFButton" class="btn btn-default">Modify And Attach PDF</button>
+	
+	<div>---</div>
+	<div id="msg">My Message Div</div>
+	<div>---</div>
+
+</j:jelly>]]></html>
+        <name>My PDF Generation Tutorial Page</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-05 17:37:48</sys_created_on>
+        <sys_id>f2273f7fdb532300fc2011203996198a</sys_id>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name>My PDF Generation Tutorial Page</sys_name>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>sys_ui_page_f2273f7fdb532300fc2011203996198a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-06 15:55:50</sys_updated_on>
+    </sys_ui_page>
+</record_update>
