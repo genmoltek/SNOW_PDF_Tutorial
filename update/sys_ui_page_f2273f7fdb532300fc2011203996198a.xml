@@ -6,7 +6,7 @@
 //https://dev65352.service-now.com/incident.do?sys_id=d71f7935c0a8016700802b64c67c11c6
 var myHardcodedIncidentRecordId       = "d71f7935c0a8016700802b64c67c11c6";
 var myHardcodedPdfAttachementRecordId = "52e6f77fdb532300fc20112039961907";
-var myPDFScriptIncludeName = "myPDFGeneratorScriptInclude";
+var myPDFScriptIncludeName            = "myPDFGeneratorScriptInclude";
 
 jQuery('#getFieldNames').click(function () {
 	var ga = new GlideAjax(myPDFScriptIncludeName); //this is server side object name 
@@ -37,6 +37,30 @@ jQuery('#fillInFields').click(function () {
 
 
 
+jQuery('#createNewPDF').click(function () {
+	var myNewPDFScriptIncludeName = "MyCreatePDFFromScratch";
+	var methodNameToCall          = 'createPDF';
+	var htmlsource                ="<p>Hello From HTML Source Used to Create New PDF File!!</p>";
+	var myTargetTableName = 'incident';
+	var myTargetRecordId  = myHardcodedIncidentRecordId;
+	var myTargetFileName  = "MyNewlyCreatedPdfFile";
+	var ga = new GlideAjax(myNewPDFScriptIncludeName); //this is server side object name 
+	ga.addParam('sysparm_name',methodNameToCall); //this is the method name to call on the object
+	ga.addParam('sysparm_htmlsource', htmlsource);
+	ga.addParam('sysparm_targetTableName', myTargetTableName);
+	ga.addParam('sysparm_targetRecordId',  myTargetRecordId);
+	ga.addParam('sysparm_targetFilename',  myTargetFileName);
+    
+	ga.getXML(createNewPdfCallback);
+	
+	/**********
+	var p = new UP3PDF();
+	p.createPDF('<p>Hello World!</p>',  //HTML to convert to PDF  
+	   'incident',  //Attach PDF to table  
+	   '85071a1347c12200e0ef563dbb9a71c1', //Attach PDF to record/sys_id  
+	   'myFile.pdf');  //attachment filename  
+	**********/
+});
 
 
 //MUST ALWAYS use a lower-case 'j' in  jQuery calls.    Otherwise can fail silently (or barely noticeable in the Dev Console of the Browser...)
@@ -62,6 +86,14 @@ function pdfFillInCallback(response) {
 }
 
 
+function createNewPdfCallback(response) {
+	var answer = response.responseXML.documentElement.getAttribute('answer');
+	jQuery("#msg").append("<p> NEW PDF Created. Attachment Record ID: ")
+		.append(answer)
+		.append("</p>")
+		.append("<div>")
+		.append("<a href=https://dev65352.service-now.com/sys_attachment.do?sys_id=" + answer + ">direct link to attachment record</a></div>");
+}
 
 ]]></client_script>
         <description>This solution is NOT using a Document Template. At least not yet.&#13;
@@ -89,7 +121,9 @@ https://store.servicenow.com/sn_appstore_store.do#!/store/application/ad5c5f11f7
 	<div><button id="getFieldNames" class="btn btn-default">Get PDF Field Names</button></div>
 	<div><button id="getFieldTypes" class="btn btn-default">Get PDF Field Types</button></div>
 	<div><button id="fillInFields"  class="btn btn-default">Fill In PDF Fields</button></div>
-
+	<div>***</div>
+		<div><button id="createNewPDF"  class="btn btn-default">Create NEW PDF</button></div>
+	<div>***</div>
 	<div>---</div>
 	<div id="msg"></div>
 	<div>---</div>
@@ -100,13 +134,13 @@ https://store.servicenow.com/sn_appstore_store.do#!/store/application/ad5c5f11f7
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-05 17:37:48</sys_created_on>
         <sys_id>f2273f7fdb532300fc2011203996198a</sys_id>
-        <sys_mod_count>29</sys_mod_count>
+        <sys_mod_count>35</sys_mod_count>
         <sys_name>My PDF Generation Tutorial Page</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_ui_page_f2273f7fdb532300fc2011203996198a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-06 19:46:51</sys_updated_on>
+        <sys_updated_on>2019-02-08 14:14:01</sys_updated_on>
     </sys_ui_page>
 </record_update>

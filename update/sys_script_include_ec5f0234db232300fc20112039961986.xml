@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_237223_mypdfgene.MyCreatePDFFromScratch</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>MyCreatePDFFromScratch</name>
+        <script><![CDATA[var MyCreatePDFFromScratch = Class.create();
+MyCreatePDFFromScratch.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+	_document : null,  
+  
+	createPDF : function() {  
+		gs.addInfoMessage("A0 The Time Is: " + new GlideDateTime().getDisplayValue());
+		var html     = this.getParameter('sysparm_htmlsource');
+		var table    = this.getParameter('sysparm_targetTableName');
+		var sys_id   = this.getParameter('sysparm_targetRecordId');
+		var filename = this.getParameter('sysparm_targetFilename');
+		gs.addInfoMessage("A1 Found Parameter Value for HTML    : " + html);
+		gs.addInfoMessage("A2 Found Parameter Value for table   : " + table);
+		gs.addInfoMessage("A3 Found Parameter Value for sys_id  : " + sys_id);
+		gs.addInfoMessage("A4 Found Parameter Value for filename: " + filename);
+		
+		var pdfDoc = new GeneralPDF.Document(null, null, null, null, null, null);  
+		gs.addInfoMessage("A5 Found Parameter Value for filename: " + filename);
+		this._document = new GeneralPDF(pdfDoc);  
+		gs.addInfoMessage("A6 Found Parameter Value for filename: " + filename);
+		this._document.startHTMLParser();  
+		gs.addInfoMessage("A7 Found Parameter Value for filename: " + filename);
+		this._document.addHTML(html);  
+		gs.addInfoMessage("A8 Found Parameter Value for filename: " + filename);
+		this._document.stopHTMLParser();  
+		gs.addInfoMessage("A9 Calling SaveAs..."+ new GlideDateTime().getDisplayValue());
+		this._saveAs(table, sys_id, filename);  
+	},  
+
+	_saveAs : function (table, sys_id, filename){  
+		gs.addInfoMessage("B1 Inside SaveAs..." + new GlideDateTime().getDisplayValue());
+		var att = new GeneralPDF.Attachment();  
+		gs.addInfoMessage("B2 Created Attachment Object..."+ new GlideDateTime().getDisplayValue());
+		att.setTableName(table);  
+		att.setTableId(sys_id);  
+		att.setName(filename);  
+		att.setType('application/pdf');  
+		gs.addInfoMessage("B3 About to get Document Body..." + new GlideDateTime().getDisplayValue());
+		att.setBody(this._document.get());  
+		gs.addInfoMessage("B4 About to attach..." + new GlideDateTime().getDisplayValue());
+		GeneralPDF.attach(att);  
+	},  
+	
+    type: 'MyCreatePDFFromScratch'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-08 12:52:36</sys_created_on>
+        <sys_id>ec5f0234db232300fc20112039961986</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>MyCreatePDFFromScratch</sys_name>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>sys_script_include_ec5f0234db232300fc20112039961986</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-08 14:14:25</sys_updated_on>
+    </sys_script_include>
+</record_update>
