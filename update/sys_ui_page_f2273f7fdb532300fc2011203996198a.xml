@@ -6,7 +6,7 @@
 //https://dev65352.service-now.com/incident.do?sys_id=d71f7935c0a8016700802b64c67c11c6
 var myHardcodedIncidentRecordId       = "d71f7935c0a8016700802b64c67c11c6";
 var myHardcodedPdfAttachementRecordId = "52e6f77fdb532300fc20112039961907";
-var myPDFScriptIncludeName            = "myPDFGeneratorScriptInclude";
+var myPDFScriptIncludeName            = "myDylanLindgrenPDFGeneratorScriptInclude";
 
 jQuery('#getFieldNames').click(function () {
 	var ga = new GlideAjax(myPDFScriptIncludeName); //this is server side object name 
@@ -37,30 +37,6 @@ jQuery('#fillInFields').click(function () {
 
 
 
-jQuery('#createNewPDF').click(function () {
-	var myNewPDFScriptIncludeName = "MyNewPDF";
-	var methodNameToCall          = 'createPDF';
-	var htmlsource                ="<p>Hello From HTML Source Used to Create New PDF File!!</p>";
-	var myTargetTableName = 'incident';
-	var myTargetRecordId  = myHardcodedIncidentRecordId;
-	var myTargetFileName  = "MyNewlyCreatedPdfFile";
-	var ga = new GlideAjax(myNewPDFScriptIncludeName); //this is server side object name 
-	ga.addParam('sysparm_name',methodNameToCall); //this is the method name to call on the object
-	ga.addParam('sysparm_htmlsource', htmlsource);
-	ga.addParam('sysparm_targetTableName', myTargetTableName);
-	ga.addParam('sysparm_targetRecordId',  myTargetRecordId);
-	ga.addParam('sysparm_targetFilename',  myTargetFileName);
-    
-	ga.getXML(createNewPdfCallback);
-	
-	/**********
-	var p = new UP3PDF();
-	p.createPDF('<p>Hello World!</p>',  //HTML to convert to PDF  
-	   'incident',  //Attach PDF to table  
-	   '85071a1347c12200e0ef563dbb9a71c1', //Attach PDF to record/sys_id  
-	   'myFile.pdf');  //attachment filename  
-	**********/
-});
 
 
 //MUST ALWAYS use a lower-case 'j' in  jQuery calls.    Otherwise can fail silently (or barely noticeable in the Dev Console of the Browser...)
@@ -86,33 +62,33 @@ function pdfFillInCallback(response) {
 }
 
 
-function createNewPdfCallback(response) {
-	var answer = response.responseXML.documentElement.getAttribute('answer');
-	jQuery("#msg").append("<p> NEW PDF Created. Attachment Record ID: ")
-		.append(answer)
-		.append("</p>")
-		.append("<div>")
-		.append("<a href=https://dev65352.service-now.com/sys_attachment.do?sys_id=" + answer + ">direct link to attachment record</a></div>");
-}
-
 ]]></client_script>
-        <description>This solution is NOT using a Document Template. At least not yet.&#13;
+        <description>This solution is NOT using a Document Template.  I am strugging to find a NON-HR related tutorial for using Templates to create PDF.&#13;
+&#13;
+https://www.dylanlindgren.com/2017/09/30/filling-pdf-forms-in-servicenow/&#13;
+"The PDF Generator plugin comes with a script include called GeneralPdfUtils, which contains the majority of the functions which we can use to interact with PDF forms."&#13;
+&#13;
+&#13;
+&#13;
 For the moment... repurposing an arbitrary Incident Record to hold the PDF Fillable Form.&#13;
-Manually Attached the PDF to the Record.&#13;
-Then using that Form... with the PDF Generator API to get Information From it.. and to Add Information To a new PDF... (using this Fillable Form as the Template).&#13;
+I found a fillable PDF from Dylan Lindgren https://community.servicenow.com/community?id=community_blog&amp;sys_id=4acc6265dbd0dbc01dcaf3231f961949&#13;
+Downloaded that PDF, and then manually attached the PDF to an arbitrary Incident Record.&#13;
 &#13;
-Apparently building a JSON structure that matches the PDF's internal Structure...&#13;
-Allows for overwriting of the field content (in-memory).. and subsequently output to Disk. (as attachment to a record).&#13;
+His code uses "global.GeneralPdfUtils();" &#13;
+I am still not clear if this is part of the PDF Generator plugin or not.&#13;
+He uses code to instrospect the metadata of the PDF file and determine which fields are "fillable".&#13;
 &#13;
-SysID of -1 tells ServiceNow to create a New Record (supposedly)&#13;
+He then builds a corresponding JSON structure to  map between the JSON and PDF internal Structure.&#13;
+I "think" this allows for overwriting of the field content (in-memory).. and subsequently output to Disk. (as attachment to a record).&#13;
 &#13;
-Article For this Code:&#13;
-https://community.servicenow.com/community?id=community_blog&amp;sys_id=4acc6265dbd0dbc01dcaf3231f961949&#13;
+ISSUE: &#13;
+I can't figure out how to build a PDF from Scratch, nor from HTML.&#13;
+I keep getting errors in the code.&#13;
 &#13;
 Also checkout a Licensed Solution on the ServiceNow Store:&#13;
 https://store.servicenow.com/sn_appstore_store.do#!/store/application/ad5c5f11f7131200d03eedd0358dff1b/2.2.1?referer=sn_appstore_store.do%23!%2Fstore%2Fsearch%3Fq%3DUXstorm</description>
         <direct>false</direct>
-        <endpoint>x_237223_mypdfgene_My PDF Generation Tutorial Page.do</endpoint>
+        <endpoint>x_237223_mypdfgene_My PDF Generation Tutorial Page  - DylanLindgren.do</endpoint>
         <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
 	<div>Hello from my PDF Generator Tutorial Page</div>
@@ -121,26 +97,23 @@ https://store.servicenow.com/sn_appstore_store.do#!/store/application/ad5c5f11f7
 	<div><button id="getFieldNames" class="btn btn-default">Get PDF Field Names</button></div>
 	<div><button id="getFieldTypes" class="btn btn-default">Get PDF Field Types</button></div>
 	<div><button id="fillInFields"  class="btn btn-default">Fill In PDF Fields</button></div>
-	<div>***</div>
-		<div><button id="createNewPDF"  class="btn btn-default">Create NEW PDF</button></div>
-	<div>***</div>
 	<div>---</div>
 	<div id="msg"></div>
 	<div>---</div>
 </j:jelly>]]></html>
-        <name>My PDF Generation Tutorial Page</name>
+        <name>My PDF Generation Tutorial Page  - DylanLindgren</name>
         <processing_script/>
         <sys_class_name>sys_ui_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-05 17:37:48</sys_created_on>
         <sys_id>f2273f7fdb532300fc2011203996198a</sys_id>
-        <sys_mod_count>36</sys_mod_count>
-        <sys_name>My PDF Generation Tutorial Page</sys_name>
+        <sys_mod_count>40</sys_mod_count>
+        <sys_name>My PDF Generation Tutorial Page  - DylanLindgren</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_ui_page_f2273f7fdb532300fc2011203996198a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-11 13:49:23</sys_updated_on>
+        <sys_updated_on>2019-02-11 17:49:08</sys_updated_on>
     </sys_ui_page>
 </record_update>
