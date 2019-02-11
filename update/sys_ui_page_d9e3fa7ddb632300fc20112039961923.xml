@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[//NOTE: To directly access the record Use this URL:
+//https://dev65352.service-now.com/incident.do?sys_id=d71f7935c0a8016700802b64c67c11c6
+var myHardcodedIncidentRecordId       = "d71f7935c0a8016700802b64c67c11c6";
+var myHardcodedPdfAttachementRecordId = "52e6f77fdb532300fc20112039961907";
+var myPDFScriptIncludeName            = "MyNewPdfFromScratchScriptInclude";
+
+jQuery('#createNewPDF').click(function () {
+	var myNewPDFScriptIncludeName = "MyNewPDF";
+	var methodNameToCall          = 'createPDF';
+	var htmlsource                ="<p>Hello From HTML Source Used to Create New PDF File!!</p>";
+	var myTargetTableName = 'incident';
+	var myTargetRecordId  = myHardcodedIncidentRecordId;
+	var myTargetFileName  = "MyNewlyCreatedPdfFile";
+	var ga = new GlideAjax(myNewPDFScriptIncludeName); //this is server side object name 
+	ga.addParam('sysparm_name',methodNameToCall); //this is the method name to call on the object
+	ga.addParam('sysparm_htmlsource', htmlsource);
+	ga.addParam('sysparm_targetTableName', myTargetTableName);
+	ga.addParam('sysparm_targetRecordId',  myTargetRecordId);
+	ga.addParam('sysparm_targetFilename',  myTargetFileName);
+    
+	ga.getXML(createNewPdfCallback);
+	
+	/**********
+	var p = new UP3PDF();
+	p.createPDF('<p>Hello World!</p>',  //HTML to convert to PDF  
+	   'incident',  //Attach PDF to table  
+	   '85071a1347c12200e0ef563dbb9a71c1', //Attach PDF to record/sys_id  
+	   'myFile.pdf');  //attachment filename  
+	**********/
+});
+
+
+function createNewPdfCallback(response) {
+	var answer = response.responseXML.documentElement.getAttribute('answer');
+	jQuery("#msg").append("<p> NEW PDF Created. Attachment Record ID: ")
+		.append(answer)
+		.append("</p>")
+		.append("<div>")
+		.append("<a href=https://dev65352.service-now.com/sys_attachment.do?sys_id=" + answer + ">direct link to attachment record</a></div>");
+}
+]]></client_script>
+        <description>Attempting to find an Example that works in my Instance for version 1.0.2 of the PDF Generator code.&#13;
+So far any example attempting to create a PDF from scratch is failing either because the API is unknown, or there is a permission / illegal access issue, or I dont have enough of the tutorial/example that clearly shows everything from begining-to-end.&#13;
+&#13;
+Note: had to download the Update Set for the PDF Generator version 1.0.2 and then Commit the UpdateSet (and resolve Errors).&#13;
+Note: had to activate the "Procurement" Plugin because the sample code that I found in an article is referencing a "proc_po" table that I didnt have.&#13;
+Apparently those "proc_" tables come with the "procurement" plugin.&#13;
+&#13;
+</description>
+        <direct>false</direct>
+        <endpoint>x_237223_mypdfgene_My PDF Create From Sratch Page.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+<div>***</div>
+	<div><button id="createNewPDF"  class="btn btn-default">Create NEW PDF</button></div>
+<div>***</div>
+</j:jelly>]]></html>
+        <name>My PDF Create From Sratch Page</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-11 17:53:27</sys_created_on>
+        <sys_id>d9e3fa7ddb632300fc20112039961923</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>My PDF Create From Sratch Page</sys_name>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>sys_ui_page_d9e3fa7ddb632300fc20112039961923</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-11 17:59:01</sys_updated_on>
+    </sys_ui_page>
+</record_update>
