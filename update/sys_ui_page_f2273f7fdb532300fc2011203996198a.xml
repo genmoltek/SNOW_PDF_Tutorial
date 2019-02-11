@@ -38,7 +38,7 @@ jQuery('#fillInFields').click(function () {
 
 
 jQuery('#createNewPDF').click(function () {
-	var myNewPDFScriptIncludeName = "MyCreatePDFFromScratch";
+	var myNewPDFScriptIncludeName = "MyNewPDF";
 	var methodNameToCall          = 'createPDF';
 	var htmlsource                ="<p>Hello From HTML Source Used to Create New PDF File!!</p>";
 	var myTargetTableName = 'incident';
@@ -134,13 +134,13 @@ https://store.servicenow.com/sn_appstore_store.do#!/store/application/ad5c5f11f7
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-05 17:37:48</sys_created_on>
         <sys_id>f2273f7fdb532300fc2011203996198a</sys_id>
-        <sys_mod_count>35</sys_mod_count>
+        <sys_mod_count>36</sys_mod_count>
         <sys_name>My PDF Generation Tutorial Page</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_ui_page_f2273f7fdb532300fc2011203996198a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-08 14:14:01</sys_updated_on>
+        <sys_updated_on>2019-02-11 13:49:23</sys_updated_on>
     </sys_ui_page>
 </record_update>
