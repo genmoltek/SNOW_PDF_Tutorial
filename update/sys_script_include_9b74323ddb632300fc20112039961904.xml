@@ -3,7 +3,7 @@
     <sys_script_include action="INSERT_OR_UPDATE">
         <access>package_private</access>
         <active>true</active>
-        <api_name>x_237223_mypdfgene.MySamDeyPDFFromScratchScriptInclude</api_name>
+        <api_name>x_237223_mypdfgene.MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment</api_name>
         <client_callable>true</client_callable>
         <description>Trying to find a working example that allows me to build a PDF from scratch or from HTML (without using the HR Application -- of which there are tons of examples)&#13;
 Need an example that works WITHOUT access to the HR Application (License Required)&#13;
@@ -40,39 +40,70 @@ fileData+=current.variables.u_department.getDisplayValue();&#13;
 var attachment = new Attachment();&#13;
 attachment.write('tablename', recordsysid, fileName, content_type, fileDate);&#13;
 &#13;
+&#13;
+======================&#13;
+======================&#13;
+Update.  Sam responded to questions about why the "Attachment" is failing...\&#13;
+He did some digging and noticed that his first approach with .write()  is only building a Text File.&#13;
+He also explained that attempting to use global.Attachment()  won't work UNLESS we EDIT the built in Out-Of-The-Box (OOB) script includes so their "Accessible From" field becomes "All Application Scopes".&#13;
+&#13;
+&#13;
 </description>
-        <name>MySamDeyPDFFromScratchScriptInclude</name>
+        <name>MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment</name>
         <script><![CDATA[var mytablename = 'incident';
 var mypdfOutputName = 'myGeneratedPDFFile';
 var myincidentSysId = 'd71f7935c0a8016700802b64c67c11c6'; 
 var myattachmentSysId = '52e6f77fdb532300fc20112039961907';
 
-var MySamDeyPDFFromScratchScriptInclude = Class.create();
-MySamDeyPDFFromScratchScriptInclude.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+var MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment = Class.create();
+MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
 
 	
-    type: 'MySamDeyPDFFromScratchScriptInclude',
+    type: 'MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment',
 	createPdfFromHtml: function() {
-			gs.info("A1: Hello from MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			gs.addInfoMessage("A1: Hello from MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.info("A1: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
 			var tableName = mytablename;
 			var recordsysid = myincidentSysId;
-		    var fileNameDateTime = new GlideDateTime().getDisplayValue();
+			gs.info("A1a: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1a: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+
+			var fileNameDateTime = new GlideDateTime().getDisplayValue();
 			var fileName = mypdfOutputName + ".pdf";
+			gs.info("A1b: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1b: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
 			var content_type = 'text/pdf';
 			var fileData=""; // Declare an empty string
 
-			fileData+=current.number+" "+current.short_description+"</ b>";           // current access the varibles in the record
-			fileData+=current.variables.u_requested_for.getDisplayValue()+"</ b>";    // current.variables access the variables or fields in the form or catalog Item
-			fileData+=current.variables.u_department.getDisplayValue();
-		    gs.info("A2: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-		    gs.addInfoMessage("A2: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			var attachment = new Attachment();
-			gs.info("A3: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			gs.addInfoMessage("A3: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			//fileData+=current.number+" "+current.short_description+"</ b>";           // current access the varibles in the record
+			fileData+="<div>Hello. This data Should Appear in the PDF.</div></b>";
+		
+			gs.info("A1c: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1c: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+
+			//fileData+=current.variables.u_requested_for.getDisplayValue()+"</ b>";    // current.variables access the variables or fields in the form or catalog Item
+			//gs.info("A1d: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			//gs.addInfoMessage("A1d: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+		
+			//fileData+=current.variables.u_department.getDisplayValue();
+		    //gs.info("A2: MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+		    //gs.addInfoMessage("A2: MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+		
+			var attachment;
+			try {
+				gs.info("== ABOUT TO CREATE ATTACHMENT OBJECT..."  + new GlideDateTime().getDisplayValue());
+				gs.addInfoMessage("== ABOUT TO CREATE ATTACHMENT OBJECT..."  + new GlideDateTime().getDisplayValue());
+				attachment = new global.Attachment();
+				gs.info("== CREATED ATTACHMENT OBJECT !! ==" + new GlideDateTime().getDisplayValue());
+				gs.addInfoMessage("== CREATED ATTACHMENT OBJECT !! == " + new GlideDateTime().getDisplayValue());
+			} catch(e){         
+				gs.error(e.message);
+				gs.addErrorMessage(e.message);
+			}
+	
 			answer = attachment.write(tableName, recordsysid, fileName, content_type, fileData);
-			gs.info("A4: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			gs.addInfoMessage("A4: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.info("A3: MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A3: MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
 			return answer;
 	}
 });]]></script>
@@ -80,13 +111,13 @@ MySamDeyPDFFromScratchScriptInclude.prototype = Object.extendsObject(global.Abst
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-11 17:55:13</sys_created_on>
         <sys_id>9b74323ddb632300fc20112039961904</sys_id>
-        <sys_mod_count>13</sys_mod_count>
-        <sys_name>MySamDeyPDFFromScratchScriptInclude</sys_name>
+        <sys_mod_count>23</sys_mod_count>
+        <sys_name>MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_script_include_9b74323ddb632300fc20112039961904</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-12 00:51:37</sys_updated_on>
+        <sys_updated_on>2019-02-12 04:03:37</sys_updated_on>
     </sys_script_include>
 </record_update>
