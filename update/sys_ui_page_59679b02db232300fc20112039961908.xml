@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var source_tableName = "sc_req_item";
+var source_recordSYSID = "d70273e837423000158bbfc8bcbe5d1" ;// sys id of the record's data you want to use in the pdf
+var source_view  = "ess"; // View name in this case I am using the Self Service View
+var target_tableName = "sc_req_item"; // In this case target and source is same, it could be different as well
+var target_recordSYSID = "d70273e837423000158bbfc8bcbe5d1"; // In this case target and source is same, it could be different as well
+var pdfName = "Test.pdf"; // Could be anything but do mention the extension .pdf
+var basicAuthenticatorSYSID = "4f399fc6db232300fc201120399619fc"; //"000000007a32300180edcc773990e39"; 
+// this is the sys id of the Basic Authentication Profile which is available from sys_auth_profile_basic_list.do table.
+ 
+jQuery('#createNewPDFViaREST').click(function () {
+	jQuery("#msg").append("<p> You have clicked the button to generate a REST call.. ");
+	try {
+	generatePDFUsingREST(source_tableName,source_recordSYSID,source_view,target_tableName,target_recordSYSID,pdfName,basicAuthenticatorSYSID);
+	jQuery("#msg").append("<p> REST call has been made.");
+	} catch (e) {
+		jQuery("#msg").append("<p> EXCEPTION CAUGHT: " + e);
+	}
+});
+	
+/*
+Calling this function generatePDFUsingREST creates a REST message and collects the data defined in the URL endpoint and then saveResponseBodyAsAttachment function (which is OOTB) creates an attachment in the parameter table
+*/
+function generatePDFUsingREST( sourceTable, sourceID, sourceView, targetTable, targetID, fileName, authProfileSysID ) {
+
+    var r = new sn_ws.RESTMessageV2();
+    r.setHttpMethod('get');
+    r.setEndpoint(gs.getProperty('glide.servlet.uri')+ sourceTable + '.do?PDF&sys_id=' + sourceID + '&sysparm_view=' + sourceView);
+    r.setAuthenticationProfile('basic', authProfileSysID);
+    r.saveResponseBodyAsAttachment(targetTable, targetID, fileName);            
+    var response = r.execute();   
+}
+
+ ]]></client_script>
+        <description>BUSTED:  Getting a runtime exception:  "EXCEPTION CAUGHT: ReferenceError: sn_ws is not defined"&#13;
+This is apparently because a server-side use of code and not client side.&#13;
+Per Article: https://community.servicenow.com/community?id=community_question&amp;sys_id=4b4a0ba9db5cdbc01dcaf3231f961906</description>
+        <direct>false</direct>
+        <endpoint>x_237223_mypdfgene_BUSTED My New PDF via REST - per Sam_Dey .do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<div>***</div>
+		<div><button id="createNewPDFViaREST"  class="btn btn-default">Create NEW PDF Via REST</button></div>
+	<div>***</div>
+	<div id="msg"></div>	
+</j:jelly>]]></html>
+        <name>BUSTED My New PDF via REST - per Sam_Dey </name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-12 15:05:12</sys_created_on>
+        <sys_id>59679b02db232300fc20112039961908</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>BUSTED My New PDF via REST - per Sam_Dey </sys_name>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>sys_ui_page_59679b02db232300fc20112039961908</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-12 15:22:19</sys_updated_on>
+    </sys_ui_page>
+</record_update>
