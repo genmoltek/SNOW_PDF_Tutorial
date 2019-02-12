@@ -3,18 +3,76 @@
     <sys_script_include action="INSERT_OR_UPDATE">
         <access>package_private</access>
         <active>true</active>
-        <api_name>x_237223_mypdfgene.MyNewPdfFromScratchScriptInclude</api_name>
+        <api_name>x_237223_mypdfgene.MySamDeyPDFFromScratchScriptInclude</api_name>
         <client_callable>true</client_callable>
         <description>Trying to find a working example that allows me to build a PDF from scratch or from HTML (without using the HR Application -- of which there are tons of examples)&#13;
-Need an example that works WITHOUT access to the HR Application (License Required)</description>
-        <name>MyNewPdfFromScratchScriptInclude</name>
-        <script><![CDATA[var MyNewPdfFromScratchScriptInclude = Class.create();
-MyNewPdfFromScratchScriptInclude.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+Need an example that works WITHOUT access to the HR Application (License Required)&#13;
+&#13;
+Response from online Post by "Sam_Dey" indicates that Dylan's example should work..  if you use the .write() capability.  &#13;
+You won't get a professional stylized PDF however... can't control Header.. can't control Footer...&#13;
+But the article also indicates how you can find out more details:&#13;
+https://community.servicenow.com/community?id=community_Article&amp;sys_id=d947860cdbbe1380e0e80b55ca96196a&amp;anchor=comment_8ca184c2dbe3a7805d782183ca9619cb&#13;
+---------------------------&#13;
+Auto filling PDF with catalogue item data is a bit tricky one and there isn't much documentation about it so I am sharing my idea and methods that I implemented for this.&#13;
+There are two ways of doing it:&#13;
+1st method is the ".write" function.&#13;
+----------------------------&#13;
+Syntax: attachment.write('tablename', recordsysid, fileName, content_type, fileDate);&#13;
+"attachment" is the object variable of Attachment() type&#13;
+"tablename" is string variable that contains the name of the table where you want to attach the file.&#13;
+"recordsysid" is the sys id of the record where you want to attach the file&#13;
+"filename" is the file name of the attachment&#13;
+"content_type" is the type of content in the file (usually for pdf it is 'text/text')&#13;
+"fileData" contains the data that you want to put in the file.&#13;
+&#13;
+Example: Business Rule to run after insert&#13;
+-----------------------------------------&#13;
+var tableName = "sc_req_item"; //Request Item Table&#13;
+var recordsysid = current.sys_id; //sys id of the record&#13;
+var fileName = current.number+" FormData.pdf";&#13;
+var content_type = 'text/pdf';&#13;
+&#13;
+var fileData=""; // Declare an empty string&#13;
+&#13;
+fileData+=current.number+" "+current.short_description+"&lt;/ b&gt;";           // current access the varibles in the record&#13;
+fileData+=current.variables.u_requested_for.getDisplayValue()+"&lt;/ b&gt;";    // current.variables access the variables or fields in the form or catalog Item&#13;
+fileData+=current.variables.u_department.getDisplayValue();&#13;
+var attachment = new Attachment();&#13;
+attachment.write('tablename', recordsysid, fileName, content_type, fileDate);&#13;
+&#13;
+</description>
+        <name>MySamDeyPDFFromScratchScriptInclude</name>
+        <script><![CDATA[var mytablename = 'incident';
+var mypdfOutputName = 'myGeneratedPDFFile';
+var myincidentSysId = 'd71f7935c0a8016700802b64c67c11c6'; 
+var myattachmentSysId = '52e6f77fdb532300fc20112039961907';
 
-    type: 'MyNewPdfFromScratchScriptInclude',
+var MySamDeyPDFFromScratchScriptInclude = Class.create();
+MySamDeyPDFFromScratchScriptInclude.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+	
+    type: 'MySamDeyPDFFromScratchScriptInclude',
 	createPdfFromHtml: function() {
-			gs.addInfoMessage("Hello from MyNewPdfFromScratchScriptInclude.createPdfFromHtml()");
-			answer = true;
+			gs.info("A1: Hello from MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1: Hello from MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			var tableName = mytablename;
+			var recordsysid = myincidentSysId;
+		    var fileNameDateTime = new GlideDateTime().getDisplayValue();
+			var fileName = mypdfOutputName + ".pdf";
+			var content_type = 'text/pdf';
+			var fileData=""; // Declare an empty string
+
+			fileData+=current.number+" "+current.short_description+"</ b>";           // current access the varibles in the record
+			fileData+=current.variables.u_requested_for.getDisplayValue()+"</ b>";    // current.variables access the variables or fields in the form or catalog Item
+			fileData+=current.variables.u_department.getDisplayValue();
+		    gs.info("A2: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+		    gs.addInfoMessage("A2: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			var attachment = new Attachment();
+			gs.info("A3: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A3: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			answer = attachment.write(tableName, recordsysid, fileName, content_type, fileData);
+			gs.info("A4: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A4: MySamDeyPDFFromScratchScriptInclude.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
 			return answer;
 	}
 });]]></script>
@@ -22,13 +80,13 @@ MyNewPdfFromScratchScriptInclude.prototype = Object.extendsObject(global.Abstrac
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-11 17:55:13</sys_created_on>
         <sys_id>9b74323ddb632300fc20112039961904</sys_id>
-        <sys_mod_count>3</sys_mod_count>
-        <sys_name>MyNewPdfFromScratchScriptInclude</sys_name>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name>MySamDeyPDFFromScratchScriptInclude</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_script_include_9b74323ddb632300fc20112039961904</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-12 00:13:20</sys_updated_on>
+        <sys_updated_on>2019-02-12 00:51:37</sys_updated_on>
     </sys_script_include>
 </record_update>
