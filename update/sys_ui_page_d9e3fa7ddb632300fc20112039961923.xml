@@ -6,60 +6,21 @@
 //https://dev65352.service-now.com/incident.do?sys_id=d71f7935c0a8016700802b64c67c11c6
 var myNewPDFScriptIncludeName         = "MySamDeyPDFFromScratchScriptInclude";
 var methodNameToCall                  = 'createPdfFromHtml';
-
 var myHardcodedTargetTableName        = "incident";
 var myHardcodedIncidentRecordId       = "d71f7935c0a8016700802b64c67c11c6";
 var myHardcodedPdfAttachementRecordId = "52e6f77fdb532300fc20112039961907";
 var myNewPDFOutputAttachmentName      = "MyNewlyCreatedPdfAttachment";
 
-jQuery('#createNewPDF').click(function () {
-	var htmlsource        ="<p>Hello From HTML Source Used to Create New PDF File!!</p>";
-	var myTargetTableName = myHardcodedTargetTableName;
-	var myTargetRecordId  = myHardcodedPdfAttachementRecordId;
-	var myTargetFileName  = myNewPDFOutputAttachmentName;
-	var ga = new GlideAjax(myNewPDFScriptIncludeName); //this is server side object name 
-	ga.addParam('sysparm_name',methodNameToCall); //this is the method name to call on the object
-	ga.addParam('sysparm_htmlsource', htmlsource);
-	ga.addParam('sysparm_targetTableName', myTargetTableName);
-	ga.addParam('sysparm_targetRecordId',  myTargetRecordId);
-	ga.addParam('sysparm_targetFilename',  myTargetFileName);
-    
-	ga.getXML(createNewPdfCallback);
-	
-	/**********
-	var p = new UP3PDF();
-	p.createPDF('<p>Hello World!</p>',  //HTML to convert to PDF  
-	   'incident',  //Attach PDF to table  
-	   '85071a1347c12200e0ef563dbb9a71c1', //Attach PDF to record/sys_id  
-	   'myFile.pdf');  //attachment filename  
-	**********/
-});
-
-
 jQuery('#createNewPDFViaREST').click(function () {
-	alert("You Clicked the REST Button.");
+	//alert("You Clicked the REST Button.");
 	var ga = new GlideAjax("MySamDeyPDFviaWebServiceScriptInclude"); //this is server side object name 
-	ga.addParam('sysparm_name',methodNameToCall); //this is the method name to call on the object
-	ga.addParam('sysparm_htmlsource', htmlsource);
-	ga.addParam('sysparm_targetTableName', myTargetTableName);
-	ga.addParam('sysparm_targetRecordId',  myTargetRecordId);
-	ga.addParam('sysparm_targetFilename',  myTargetFileName);
+	ga.addParam('sysparm_name','generatePDFUsingREST'); //this is the method name to call on the object
 	ga.getXML(createNewPdfRESTCallback);
 });
 
 function createNewPdfRESTCallback(response) {
-	var answer = response.responseXML.documentElement.getAttribute('answer');
+	var answer = response.responseXML.documentElement.getAttibute('answer');
 	jQuery("#msg").append("<p> NEW PDF Created via REST !! Attachment Record ID: ")
-		.append(answer)
-		.append("</p>")
-		.append("<div>")
-		.append("<a href=https://dev65352.service-now.com/sys_attachment.do?sys_id=" + answer + ">direct link to attachment record</a></div>");
-}
-
-
-function createNewPdfCallback(response) {
-	var answer = response.responseXML.documentElement.getAttribute('answer');
-	jQuery("#msg").append("<p> NEW PDF Created. Attachment Record ID: ")
 		.append(answer)
 		.append("</p>")
 		.append("<div>")
@@ -69,72 +30,52 @@ function createNewPdfCallback(response) {
         <description>Attempting to find an Example that works in my Instance for version 1.0.2 of the PDF Generator code.&#13;
 So far any example attempting to create a PDF from scratch is failing either because the API is unknown, or there is a permission / illegal access issue, or I dont have enough of the tutorial/example that clearly shows everything from begining-to-end.&#13;
 &#13;
-Note: had to download the Update Set for the PDF Generator version 1.0.2 and then Commit the UpdateSet (and resolve Errors).&#13;
-Note: had to activate the "Procurement" Plugin because the sample code that I found in an article is referencing a "proc_po" table that I didnt have.&#13;
-Apparently those "proc_" tables come with the "procurement" plugin.&#13;
-&#13;
 Response from online Post by "Sam_Dey" indicates that Dylan's example should work..  if you use the .write() capability.  &#13;
 You won't get a professional stylized PDF however... can't control Header.. can't control Footer...&#13;
 But the article also indicates how you can find out more details:&#13;
 https://community.servicenow.com/community?id=community_Article&amp;sys_id=d947860cdbbe1380e0e80b55ca96196a&amp;anchor=comment_8ca184c2dbe3a7805d782183ca9619cb&#13;
----------------------------&#13;
-Auto filling PDF with catalogue item data is a bit tricky one and there isn't much documentation about it so I am sharing my idea and methods that I implemented for this.&#13;
-There are two ways of doing it:&#13;
-1st method is the ".write" function.&#13;
-----------------------------&#13;
-Syntax: attachment.write('tablename', recordsysid, fileName, content_type, fileDate);&#13;
-"attachment" is the object variable of Attachment() type&#13;
-"tablename" is string variable that contains the name of the table where you want to attach the file.&#13;
-"recordsysid" is the sys id of the record where you want to attach the file&#13;
-"filename" is the file name of the attachment&#13;
-"content_type" is the type of content in the file (usually for pdf it is 'text/text')&#13;
-"fileData" contains the data that you want to put in the file.&#13;
 &#13;
-Example: Business Rule to run after insert&#13;
------------------------------------------&#13;
-var tableName = "incident"; //Incident Item Table&#13;
-var recordsysid = current.sys_id; //sys id of the record&#13;
-var fileName = current.number+" FormData.pdf";&#13;
-var content_type = 'text/pdf';&#13;
+Notes:&#13;
+===========&#13;
+Had to download the Update Set for the PDF Generator version 1.0.2 and then Commit the UpdateSet (and resolve Errors).&#13;
+Had to activate the "Procurement" Plugin because the sample code that I found in an article is referencing a "proc_po" table that I didnt have.&#13;
+Had to abort using his original approach, he even noted that it no longer works, only seems to build a text file -- which is not what is desired.&#13;
+Had to then incorporate another solution that he found.&#13;
 &#13;
-var fileData=""; // Declare an empty string&#13;
-&#13;
-fileData+=current.number+" "+current.short_description+"&lt;/ b&gt;";           // current access the varibles in the record&#13;
-fileData+=current.variables.u_requested_for.getDisplayValue()+"&lt;/ b&gt;";    // current.variables access the variables or fields in the form or catalog Item&#13;
-fileData+=current.variables.u_department.getDisplayValue();&#13;
-var attachment = new Attachment();&#13;
-attachment.write('tablename', recordsysid, fileName, content_type, fileDate);&#13;
-&#13;
-&#13;
-While this method is good but it won't support any formatting of the pdf layout. So you get a basic pdf with the data and you cannot put heading and other formatting details. Hence the 2nd method.&#13;
-&#13;
- &#13;
+New Solution relies upon a Out-Of-Box REST API, that supposedly can build a PDF from a Record and then Save as an Attachment to a Record&#13;
+Had to create a User, give it a username and pwd&#13;
+Had to create a Basic Auth Profile and assign it to that User&#13;
+Had to give the User the Role for the web service admin, and admin (just to be sure things worked, and sufficient privs to create and add the Attachment)&#13;
+Had to learn about the RESTV2, how for this scenario, we are technically BOTH the Outbound and Inbound traffic.&#13;
+Had to learn that the RESTV2 Request and RESTV2 Response are server-side only.  Can't use them on Client Side.&#13;
+Learn that the "Processing Script" for the UI-Page will allow Server-Side scripting. (not used yet, but can avoid need for Script-Includes)&#13;
+Learn that the "ess" view is for a self-service portal.   That it comes OOB, but it's NOT in the Database View listing, it's just in the View Listing. (Dont understand Difference)&#13;
+Learn that attempting to make sense of the RESTV2 Response Code is a waste of time, It's purely internal and not easy to look up.&#13;
+Learn that RESTV2 Response has an appropriate user/dev friendly method called "getErrorMessage" which allows you to see erro r message (as opposed to a non obvious integer code)&#13;
 </description>
         <direct>false</direct>
-        <endpoint>x_237223_mypdfgene_My New PDF Tutorial Page - Per Sam_Dey.do</endpoint>
+        <endpoint>x_237223_mypdfgene_My New PDF Via REST - Per Sam_Dey.do</endpoint>
         <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
-<div>***</div>
-	<div><button id="createNewPDF"  class="btn btn-default">Create NEW PDF</button></div>
-<div>***</div>
-<div>----------------</div>
-<div>***</div>
-	<div><button id="createNewPDFViaREST"  class="btn btn-default">Create NEW PDF VIA REST</button></div>
-<div>***</div>
+	<div>***</div>
+		<div><button id="createNewPDFViaREST"  class="btn btn-default">Create NEW PDF VIA REST</button></div>
+	<div>***</div>
+	<div>=====================</div>
+	<div id="msg"></div>	
 </j:jelly>]]></html>
-        <name>My New PDF Tutorial Page - Per Sam_Dey</name>
+        <name>My New PDF Via REST - Per Sam_Dey</name>
         <processing_script/>
         <sys_class_name>sys_ui_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-11 17:53:27</sys_created_on>
         <sys_id>d9e3fa7ddb632300fc20112039961923</sys_id>
-        <sys_mod_count>19</sys_mod_count>
-        <sys_name>My New PDF Tutorial Page - Per Sam_Dey</sys_name>
+        <sys_mod_count>26</sys_mod_count>
+        <sys_name>My New PDF Via REST - Per Sam_Dey</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_ui_page_d9e3fa7ddb632300fc20112039961923</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-12 15:49:20</sys_updated_on>
+        <sys_updated_on>2019-02-13 15:24:11</sys_updated_on>
     </sys_ui_page>
 </record_update>

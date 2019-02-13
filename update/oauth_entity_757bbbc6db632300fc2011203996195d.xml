@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="oauth_entity">
+    <oauth_entity action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <access_token_lifespan>1800</access_token_lifespan>
+        <active>true</active>
+        <auth_code_lifespan>60</auth_code_lifespan>
+        <auth_url/>
+        <certificate_url/>
+        <client_id>b17bbbc64463230003887413ae75e438</client_id>
+        <client_secret>eZVup8VCUoRB6eijW+g4uw==</client_secret>
+        <client_uuid>717bbbc6db632300fc20112039961938</client_uuid>
+        <comments>This is only needed for my Jakarta Dev Instance in order to allow a RESTV2 Request to be made for generation of a PDF Attachment.   Not sure that 'basic' is allowed for RESTV2 messaging.  It seems that 'basic' was kept only as a backwards compatible with Geneva and older instances.   </comments>
+        <default_grant_type>password</default_grant_type>
+        <id_token_lifespan>86400</id_token_lifespan>
+        <logo_url/>
+        <message_signature_lifespan>60</message_signature_lifespan>
+        <name>MyLocalOAuthEndpoint</name>
+        <oauth_api_script/>
+        <redirect_url/>
+        <refresh_token_lifespan>8640000</refresh_token_lifespan>
+        <revoke_token_url/>
+        <salt/>
+        <sys_class_name>oauth_entity</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-12 17:44:07</sys_created_on>
+        <sys_id>757bbbc6db632300fc2011203996195d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>MyLocalOAuthEndpoint</sys_name>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>oauth_entity_757bbbc6db632300fc2011203996195d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-12 17:44:07</sys_updated_on>
+        <token_url/>
+        <type>client</type>
+        <user/>
+    </oauth_entity>
+</record_update>

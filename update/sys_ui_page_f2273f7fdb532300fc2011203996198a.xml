@@ -88,7 +88,7 @@ I keep getting errors in the code.&#13;
 Also checkout a Licensed Solution on the ServiceNow Store:&#13;
 https://store.servicenow.com/sn_appstore_store.do#!/store/application/ad5c5f11f7131200d03eedd0358dff1b/2.2.1?referer=sn_appstore_store.do%23!%2Fstore%2Fsearch%3Fq%3DUXstorm</description>
         <direct>false</direct>
-        <endpoint>x_237223_mypdfgene_My Existing Pdf Tutorial Page  - DylanLindgren.do</endpoint>
+        <endpoint>x_237223_mypdfgene_My Existing Pdf  Via ScriptInclude - DylanLindgren.do</endpoint>
         <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
 	<div>Hello from my PDF Generator Tutorial Page</div>
@@ -101,19 +101,19 @@ https://store.servicenow.com/sn_appstore_store.do#!/store/application/ad5c5f11f7
 	<div id="msg"></div>
 	<div>---</div>
 </j:jelly>]]></html>
-        <name>My Existing Pdf Tutorial Page  - DylanLindgren</name>
+        <name>My Existing Pdf  Via ScriptInclude - DylanLindgren</name>
         <processing_script/>
         <sys_class_name>sys_ui_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-05 17:37:48</sys_created_on>
         <sys_id>f2273f7fdb532300fc2011203996198a</sys_id>
-        <sys_mod_count>41</sys_mod_count>
-        <sys_name>My Existing Pdf Tutorial Page  - DylanLindgren</sys_name>
+        <sys_mod_count>42</sys_mod_count>
+        <sys_name>My Existing Pdf  Via ScriptInclude - DylanLindgren</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_ui_page_f2273f7fdb532300fc2011203996198a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-12 00:04:32</sys_updated_on>
+        <sys_updated_on>2019-02-13 15:24:34</sys_updated_on>
     </sys_ui_page>
 </record_update>

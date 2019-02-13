@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description>Same approach as the MyExistingPdfViaScriptInclude -- EXCEPT.. we have all the guts of the Script Include HERE in the "Processing Script" section of the UI-Page.  </description>
+        <direct>false</direct>
+        <endpoint>x_237223_mypdfgene_My New PDF Via RestProcessingScript.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:ui_form>
+		<p>Click OK to run the processing script.</p> 
+		<g:dialog_buttons_ok_cancel ok = "return true"/> 
+		<input type="hidden" name="f_source_tableName" value="sc_req_item"/> 
+		<input type="hidden" name="f_source_recordSYSID" value="d70273e837423000158bbfc8bcbe5d1f"/> 
+		<input type="hidden" name="f_source_view" value="ess"/> 
+		<input type="hidden" name="f_target_tableName" value="sc_req_item"/> 
+		<input type="hidden" name="f_target_recordSYSID" value="d70273e837423000158bbfc8bcbe5d1f"/> 
+		<input type="hidden" name="f_pdfName" value="TestPdfFileName"/> 
+		<input type="hidden" name="f_basicAuthenticatorSYSID" value="4f399fc6db232300fc201120399619fc"/> 
+	</g:ui_form>
+</j:jelly>]]></html>
+        <name>My New PDF Via RestProcessingScript</name>
+        <processing_script><![CDATA[var source_tableName    = f_source_tableName;
+var source_recordSYSID  = f_source_recordSYSID;
+var source_view         = f_source_view;
+var target_tableName    = f_target_tableName;
+var target_recordSYSID  = f_target_recordSYSID;
+var pdfName             = f_pdfName + "_" + new GlideDateTime().getDisplayValue() + ".pdf";
+var basicAuthenticatorSYSID = f_basicAuthenticatorSYSID;
+														
+generatePDFUsingREST();
+
+function generatePDFUsingREST() {
+	try 
+	{
+		gs.addInfoMessage("A1: Inside the REST Script Include !!");
+		gs.addInfoMessage("basicAuthenticatorSysID= " + basicAuthenticatorSYSID);
+		genPDFUsingREST(source_tableName,
+						source_recordSYSID,
+						source_view,
+						target_tableName,
+						target_recordSYSID,
+						pdfName,
+						basicAuthenticatorSYSID);
+		gs.addInfoMessage("A2: AFTER Calling genPDFUsingREST() Inside the REST Script Include !!");
+	} catch (e) {
+		gs.addErrorMessage("XXX: Exception Caught inside the REST Script Include: " + e);
+	}
+}
+
+function genPDFUsingREST( sourceTable, sourceID, sourceView, targetTable, targetID, fileName, authProfileSysID ) {
+	try 
+	{
+		gs.addInfoMessage("B1: Inside genPDFUsingREST, about to create RESTMessageV2 object.,,");
+		var r = new sn_ws.RESTMessageV2();//////////////////////////////////////
+		gs.addInfoMessage("B2a: Inside genPDFUsingREST, AFTER create RESTMessageV2 object.");
+		r.setHttpMethod('get');
+		var endpointURL = gs.getProperty('glide.servlet.uri')+ sourceTable 
+										+ '.do?PDF&sys_id=' + sourceID 
+										+ '&sysparm_view=' + sourceView;
+		gs.addInfoMessage("B3a: endpoint url: " + endpointURL);
+		r.setEndpoint(endpointURL);
+		gs.addInfoMessage("B3b: After setting endpoint...");
+		r.setAuthenticationProfile('basic', authProfileSysID);
+		
+		r.saveResponseBodyAsAttachment(targetTable, targetID, fileName);            
+		var response = r.execute();   
+		gs.addInfoMessage("B4a: About to call getResponseAttachmentSysid()");
+		var myAttachmentId = response.getResponseAttachmentSysid();
+		gs.addInfoMessage("B4b: Returned from call to getResponseAttachmentSysid()");
+		//var myErrorCode = response.getErrorCode(); Internal ServiceNow ONLY.  Not Useful.  NOT your typical HTTP Code.
+		var myErrorMessage = response.getErrorMessage();
+		gs.addInfoMessage("B5a: Internal SNOW Response ErrorMessage: " + myErrorMessage);
+		gs.addInfoMessage("B5b: AttachmentID from RESTResponse: " 
+						+ myAttachmentId + " DateTime: " 
+						+  new GlideDateTime().getDisplayValue());
+	} catch (e) {
+		gs.addErrorMessage("EXCEPTION inside genPDFUsingREST().  Reason: " + e);
+	}
+}	
+
+]]></processing_script>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-13 15:25:59</sys_created_on>
+        <sys_id>fca5a4a6db632300fc201120399619f7</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>My New PDF Via RestProcessingScript</sys_name>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>sys_ui_page_fca5a4a6db632300fc201120399619f7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-13 15:50:31</sys_updated_on>
+    </sys_ui_page>
+</record_update>

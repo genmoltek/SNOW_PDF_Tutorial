@@ -5,24 +5,68 @@
         <active>true</active>
         <api_name>x_237223_mypdfgene.MySamDeyPDFviaWebServiceScriptInclude</api_name>
         <client_callable>true</client_callable>
-        <description/>
+        <description>Attempting to find an Example that works in my Instance for version 1.0.2 of the PDF Generator code.&#13;
+So far any example attempting to create a PDF from scratch is failing either because the API is unknown, or there is a permission / illegal access issue, or I dont have enough of the tutorial/example that clearly shows everything from begining-to-end.&#13;
+&#13;
+Response from online Post by "Sam_Dey" indicates that Dylan's example should work..  if you use the .write() capability.  &#13;
+You won't get a professional stylized PDF however... can't control Header.. can't control Footer...&#13;
+But the article also indicates how you can find out more details:&#13;
+https://community.servicenow.com/community?id=community_Article&amp;sys_id=d947860cdbbe1380e0e80b55ca96196a&amp;anchor=comment_8ca184c2dbe3a7805d782183ca9619cb&#13;
+&#13;
+Notes:&#13;
+===========&#13;
+Had to download the Update Set for the PDF Generator version 1.0.2 and then Commit the UpdateSet (and resolve Errors).&#13;
+Had to activate the "Procurement" Plugin because the sample code that I found in an article is referencing a "proc_po" table that I didnt have.&#13;
+Had to abort using his original approach, he even noted that it no longer works, only seems to build a text file -- which is not what is desired.&#13;
+Had to then incorporate another solution that he found.&#13;
+&#13;
+New Solution relies upon a Out-Of-Box REST API, that supposedly can build a PDF from a Record and then Save as an Attachment to a Record&#13;
+Had to create a User, give it a username and pwd&#13;
+Had to create a Basic Auth Profile and assign it to that User&#13;
+Had to give the User the Role for the web service admin, and admin (just to be sure things worked, and sufficient privs to create and add the Attachment)&#13;
+Had to learn about the RESTV2, how for this scenario, we are technically BOTH the Outbound and Inbound traffic.&#13;
+Had to learn that the RESTV2 Request and RESTV2 Response are server-side only.  Can't use them on Client Side.&#13;
+Learn that the "Processing Script" for the UI-Page will allow Server-Side scripting. (not used yet, but can avoid need for Script-Includes)&#13;
+Learn that the "ess" view is for a self-service portal.   That it comes OOB, but it's NOT in the Database View listing, it's just in the View Listing. (Dont understand Difference)&#13;
+Learn that attempting to make sense of the RESTV2 Response Code is a waste of time, It's purely internal and not easy to look up.&#13;
+Learn that RESTV2 Response has an appropriate user/dev friendly method called "getErrorMessage" which allows you to see erro r message (as opposed to a non obvious integer code)</description>
         <name>MySamDeyPDFviaWebServiceScriptInclude</name>
-        <script><![CDATA[var source_tableName = "sc_req_item";
-var source_recordSYSID = "3194244637a32300180edcc773990e59" ;// sys id of the record's data you want to use in the pdf
-var source_view  = "ess"; // View name in this case I am using the Self Service View
-var target_tableName = "sc_req_item"; // In this case target and source is same, it could be different as well
-var target_recordSYSID = "3194244637a32300180edcc773990e59"; // In this case target and source is same, it could be different as well
-var pdfName = "Test.pdf"; // Could be anything but do mention the extension .pdf
-var basicAuthenticatorSYSID = "000000007a32300180edcc773990e39"; // this is the sys id of the Basic Authentication Profile which is available from sys_auth_profile_basic_list.do table.
+        <script><![CDATA[var source_tableName    = "sc_req_item";
+var source_recordSYSID  = "d70273e837423000158bbfc8bcbe5d1f" ;// sys id of the record's data you want to use in the pdf
+var source_view         = "ess"; // View name in this case I am using the Self Service View
+var target_tableName    = "sc_req_item"; // In this case target and source is same, it could be different as well
+var target_recordSYSID  = "d70273e837423000158bbfc8bcbe5d1f"; // In this case target and source is same, it could be different as well
+var pdfName             = "Test.pdf"; // Could be anything but do mention the extension .pdf
+var basicAuthenticatorSYSID = "4f399fc6db232300fc201120399619fc"; // this is the sys id of the Basic Authentication Profile which is available from sys_auth_profile_basic_list.do table.
 
 
-function generatePDFUsingREST( sourceTable, sourceID, sourceView, targetTable, targetID, fileName, authProfileSysID ) {
-	var r = new sn_ws.RESTMessageV2();
-	r.setHttpMethod('get');
-	r.setEndpoint(gs.getProperty('glide.servlet.uri')+ sourceTable + '.do?PDF&sys_id=' + sourceID + '&sysparm_view=' + sourceView);
-	r.setAuthenticationProfile('basic', authProfileSysID);
-	r.saveResponseBodyAsAttachment(targetTable, targetID, fileName);            
-	var response = r.execute();   
+function genPDFUsingREST( sourceTable, sourceID, sourceView, targetTable, targetID, fileName, authProfileSysID ) {
+	try {
+		gs.addInfoMessage("B1: Inside genPDFUsingREST, about to create RESTMessageV2 object.,,");
+		var r = new sn_ws.RESTMessageV2();//////////////////////////////////////
+		gs.addInfoMessage("B2a: Inside genPDFUsingREST, AFTER create RESTMessageV2 object.");
+		r.setHttpMethod('get');
+		
+		var endpointURL = gs.getProperty('glide.servlet.uri')+ sourceTable + '.do?PDF&sys_id=' + sourceID + '&sysparm_view=' + sourceView;
+		gs.addInfoMessage("B3a: endpoint url: " + endpointURL);
+		r.setEndpoint(endpointURL);
+		gs.addInfoMessage("B3b: After setting endpoint...");
+		r.setAuthenticationProfile('basic', authProfileSysID);
+		
+		r.saveResponseBodyAsAttachment(targetTable, targetID, fileName);            
+		var response = r.execute();   
+		gs.addInfoMessage("B4a: About to call getResponseAttachmentSysid()");
+		var myAttachmentId = response.getResponseAttachmentSysid();
+		gs.addInfoMessage("B4b: Returned from call to getResponseAttachmentSysid()");
+		//var myErrorCode = response.getErrorCode(); Internal ServiceNow ONLY.  Not Useful.  NOT your typical HTTP Code.
+		var myErrorMessage = response.getErrorMessage();
+		gs.addInfoMessage("B5a: Internal SNOW Response ErrorMessage: " + myErrorMessage);
+		gs.addInfoMessage("B5b: AttachmentID from RESTResponse: " + myAttachmentId + " DateTime: " +  new GlideDateTime().getDisplayValue());
+		//r responseBody = response.getBody(); //Will FAIL Because Body was Saved (supposedly) as an Attachment and therefore no longer available.
+		//gs.addInfoMessage("B5: Response: " + responseBody);
+	} catch (e) {
+		gs.addErrorMessage("EXCEPTION inside genPDFUsingREST().  Reason: " + e);
+	}
 }	
 
 var MySamDeyPDFviaWebServiceScriptInclude = Class.create();
@@ -30,14 +74,12 @@ MySamDeyPDFviaWebServiceScriptInclude.prototype = Object.extendsObject(global.Ab
     type: 'MySamDeyPDFviaWebServiceScriptInclude',
 	generatePDFUsingREST: function() {
 		try {
-			gs.addInfoMessage("Inside the REST Script Include !!");
-			gs.info("Inside the REST Script Include !!");
+			gs.addInfoMessage("A1: Inside the REST Script Include !!");
+			gs.addInfoMessage("basicAuthenticatorSysID= " + basicAuthenticatorSYSID);
 			genPDFUsingREST(source_tableName,source_recordSYSID,source_view,target_tableName,target_recordSYSID,pdfName,basicAuthenticatorSYSID);
-			gs.addInfoMessage("AFTER Calling genPDFUsingREST() Inside the REST Script Include !!");
-			gs.info("AFTER Calling genPDFUsingREST() Inside the REST Script Include !!");
+			gs.addInfoMessage("A2: AFTER Calling genPDFUsingREST() Inside the REST Script Include !!");
 		} catch (e) {
-			gs.addErrorMessage("Exception Caught inside the REST Script Include: " + e);
-			gs.error("Exception Caught inside the REST Script Include: " + e);
+			gs.addErrorMessage("XXX: Exception Caught inside the REST Script Include: " + e);
 		}
 	}
 
@@ -46,13 +88,13 @@ MySamDeyPDFviaWebServiceScriptInclude.prototype = Object.extendsObject(global.Ab
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-12 04:06:31</sys_created_on>
         <sys_id>f290450edb272300fc20112039961959</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>MySamDeyPDFviaWebServiceScriptInclude</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_script_include_f290450edb272300fc20112039961959</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-12 15:49:12</sys_updated_on>
+        <sys_updated_on>2019-02-13 13:57:36</sys_updated_on>
     </sys_script_include>
 </record_update>
