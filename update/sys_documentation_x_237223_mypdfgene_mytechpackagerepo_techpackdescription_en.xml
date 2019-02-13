@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="techpackdescription" label="TechPackDescription" language="en" table="x_237223_mypdfgene_mytechpackagerepo">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>techpackdescription</element>
+            <help/>
+            <hint/>
+            <label>TechPackDescription</label>
+            <language>en</language>
+            <name>x_237223_mypdfgene_mytechpackagerepo</name>
+            <plural>TechPackDescriptions</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2019-02-13 18:25:34</sys_created_on>
+            <sys_id>6bee8deadba32300fc2011203996197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>TechPackDescription</sys_name>
+            <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+            <sys_update_name>sys_documentation_x_237223_mypdfgene_mytechpackagerepo_techpackdescription_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2019-02-13 18:25:34</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

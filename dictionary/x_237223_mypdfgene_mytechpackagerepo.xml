@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="MyTechPackageRepo" max_length="40" name="x_237223_mypdfgene_mytechpackagerepo" type="collection">
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="TechPackDanO" max_length="100" name="techpackdano" type="string"/>
+        <element label="TechPackDescription" max_length="100" name="techpackdescription" type="string"/>
+        <element label="TechPackEmailAddress" max_length="100" name="techpackemailaddress" type="string"/>
+        <element label="TechPackEndDate" max_length="40" name="techpackenddate" type="glide_date"/>
+        <element label="TechPackIsActive" max_length="40" name="techpackisactive" type="boolean"/>
+        <element label="TechPackOperatingSystem" mandatory="true" max_length="100" name="techpackoperatingsystem" type="string"/>
+        <element label="TechPackPdfAttachmentId" max_length="100" name="techpackpdfattachmentid" type="string"/>
+        <element label="TechPackPOC" max_length="100" name="techpackpoc" type="string"/>
+        <element label="TechPackStartDate" max_length="40" name="techpackstartdate" type="glide_date"/>
+        <element label="TechPackUID" mandatory="true" max_length="100" name="techpackuid" type="string"/>
+        <element label="TechPackXACTA" mandatory="true" max_length="100" name="techpackxacta" type="string"/>
+    </element>
+</database>
