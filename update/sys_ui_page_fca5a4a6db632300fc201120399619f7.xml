@@ -28,7 +28,8 @@ var target_tableName    = f_target_tableName;
 var target_recordSYSID  = f_target_recordSYSID;
 var pdfName             = f_pdfName + "_" + new GlideDateTime().getDisplayValue() + ".pdf";
 var basicAuthenticatorSYSID = f_basicAuthenticatorSYSID;
-														
+var answer = "";
+
 generatePDFUsingREST();
 
 function generatePDFUsingREST() {
@@ -36,7 +37,7 @@ function generatePDFUsingREST() {
 	{
 		gs.addInfoMessage("A1: Inside the REST Script Include !!");
 		gs.addInfoMessage("basicAuthenticatorSysID= " + basicAuthenticatorSYSID);
-		genPDFUsingREST(source_tableName,
+		answer = genPDFUsingREST(source_tableName,
 						source_recordSYSID,
 						source_view,
 						target_tableName,
@@ -44,6 +45,7 @@ function generatePDFUsingREST() {
 						pdfName,
 						basicAuthenticatorSYSID);
 		gs.addInfoMessage("A2: AFTER Calling genPDFUsingREST() Inside the REST Script Include !!");
+		return answer;
 	} catch (e) {
 		gs.addErrorMessage("XXX: Exception Caught inside the REST Script Include: " + e);
 	}
@@ -71,10 +73,19 @@ function genPDFUsingREST( sourceTable, sourceID, sourceView, targetTable, target
 		gs.addInfoMessage("B4b: Returned from call to getResponseAttachmentSysid()");
 		//var myErrorCode = response.getErrorCode(); Internal ServiceNow ONLY.  Not Useful.  NOT your typical HTTP Code.
 		var myErrorMessage = response.getErrorMessage();
-		gs.addInfoMessage("B5a: Internal SNOW Response ErrorMessage: " + myErrorMessage);
-		gs.addInfoMessage("B5b: AttachmentID from RESTResponse: " 
+		if(myErrorMessage) {
+			gs.addInfoMessage("B5a: Internal ERROR IN SNOW Response: " + myErrorMessage);
+		} else {
+			gs.addInfoMessage("B5b: AttachmentID from RESTResponse: " 
 						+ myAttachmentId + " DateTime: " 
 						+  new GlideDateTime().getDisplayValue());
+		}
+		
+		gs.addInfoMessage("Link: <a href=https://dev65352.service-now.com/sys_attachment.do?sys_id=" 
+						  + myAttachmentId + ">direct link to attachment record</a>");
+		answer = myAttachmentId;
+		return answer;
+		
 	} catch (e) {
 		gs.addErrorMessage("EXCEPTION inside genPDFUsingREST().  Reason: " + e);
 	}
@@ -85,13 +96,13 @@ function genPDFUsingREST( sourceTable, sourceID, sourceView, targetTable, target
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-13 15:25:59</sys_created_on>
         <sys_id>fca5a4a6db632300fc201120399619f7</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>My New PDF Via RestProcessingScript</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_ui_page_fca5a4a6db632300fc201120399619f7</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-13 15:50:31</sys_updated_on>
+        <sys_updated_on>2019-02-13 18:12:10</sys_updated_on>
     </sys_ui_page>
 </record_update>

@@ -20,11 +20,9 @@ jQuery('#createNewPDFViaREST').click(function () {
 
 function createNewPdfRESTCallback(response) {
 	var answer = response.responseXML.documentElement.getAttibute('answer');
-	jQuery("#msg").append("<p> NEW PDF Created via REST !! Attachment Record ID: ")
-		.append(answer)
-		.append("</p>")
-		.append("<div>")
-		.append("<a href=https://dev65352.service-now.com/sys_attachment.do?sys_id=" + answer + ">direct link to attachment record</a></div>");
+	jQuery("#msg").append("<p> ++++++++++++++++ CALL BACK +++++++++++++++++++++ </p>")
+		.append("Link: <a href=https://dev65352.service-now.com/sys_attachment.do?sys_id=")
+		.append(answer + ">direct link to attachment record</a>");
 }
 ]]></client_script>
         <description>Attempting to find an Example that works in my Instance for version 1.0.2 of the PDF Generator code.&#13;
@@ -69,13 +67,13 @@ Learn that RESTV2 Response has an appropriate user/dev friendly method called "g
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-11 17:53:27</sys_created_on>
         <sys_id>d9e3fa7ddb632300fc20112039961923</sys_id>
-        <sys_mod_count>26</sys_mod_count>
+        <sys_mod_count>29</sys_mod_count>
         <sys_name>My New PDF Via REST - Per Sam_Dey</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_ui_page_d9e3fa7ddb632300fc20112039961923</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-13 15:24:11</sys_updated_on>
+        <sys_updated_on>2019-02-13 16:31:14</sys_updated_on>
     </sys_ui_page>
 </record_update>

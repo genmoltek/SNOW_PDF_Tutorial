@@ -58,37 +58,35 @@ var myattachmentSysId = '52e6f77fdb532300fc20112039961907';
 var MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment = Class.create();
 MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
 
-	
     type: 'MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment',
 	createPdfFromHtml: function() {
-			gs.info("A1: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			gs.addInfoMessage("A1: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.info("A1: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " 
+					+ new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " 
+					+ new GlideDateTime().getDisplayValue());
 			var tableName = mytablename;
 			var recordsysid = myincidentSysId;
-			gs.info("A1a: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			gs.addInfoMessage("A1a: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.info("A1a: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " 
+					+ new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1a: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " 
+					+ new GlideDateTime().getDisplayValue());
 
 			var fileNameDateTime = new GlideDateTime().getDisplayValue();
-			var fileName = mypdfOutputName + ".pdf";
-			gs.info("A1b: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			gs.addInfoMessage("A1b: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			var fileName = mypdfOutputName + "_" + new GlideDateTime().getDisplayValue() + ".pdf";
+			gs.info("A1b: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " 
+					+ new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1b: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " 
+					+ new GlideDateTime().getDisplayValue());
+
 			var content_type = 'text/pdf';
 			var fileData=""; // Declare an empty string
-
-			//fileData+=current.number+" "+current.short_description+"</ b>";           // current access the varibles in the record
 			fileData+="<div>Hello. This data Should Appear in the PDF.</div></b>";
 		
-			gs.info("A1c: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			gs.addInfoMessage("A1c: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
+			gs.info("A1c: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " 
+					+ new GlideDateTime().getDisplayValue());
+			gs.addInfoMessage("A1c: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " 
+					+ new GlideDateTime().getDisplayValue());
 
-			//fileData+=current.variables.u_requested_for.getDisplayValue()+"</ b>";    // current.variables access the variables or fields in the form or catalog Item
-			//gs.info("A1d: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			//gs.addInfoMessage("A1d: Hello from MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-		
-			//fileData+=current.variables.u_department.getDisplayValue();
-		    //gs.info("A2: MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-		    //gs.addInfoMessage("A2: MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-		
 			var attachment;
 			try {
 				gs.info("== ABOUT TO CREATE ATTACHMENT OBJECT..."  + new GlideDateTime().getDisplayValue());
@@ -102,8 +100,6 @@ MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.prototype = Object.extends
 			}
 	
 			answer = attachment.write(tableName, recordsysid, fileName, content_type, fileData);
-			gs.info("A3: MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
-			gs.addInfoMessage("A3: MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.createPdfFromHtml() " + new GlideDateTime().getDisplayValue());
 			return answer;
 	}
 });]]></script>
@@ -111,13 +107,13 @@ MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment.prototype = Object.extends
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-02-11 17:55:13</sys_created_on>
         <sys_id>9b74323ddb632300fc20112039961904</sys_id>
-        <sys_mod_count>23</sys_mod_count>
+        <sys_mod_count>26</sys_mod_count>
         <sys_name>MySamDeyPDFFromScratchScriptInclude_FailsOnAttachment</sys_name>
         <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
         <sys_update_name>sys_script_include_9b74323ddb632300fc20112039961904</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-12 04:03:37</sys_updated_on>
+        <sys_updated_on>2019-02-13 16:11:12</sys_updated_on>
     </sys_script_include>
 </record_update>
