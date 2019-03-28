@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_embedded_help_role">
+    <sys_embedded_help_role action="INSERT_OR_UPDATE">
+        <order>1000</order>
+        <role display_value="x_237223_mysubflow.user" name="x_237223_mysubflow.user">9a8bf247db232300fc20112039961913</role>
+        <sys_class_name>sys_embedded_help_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-15 15:37:03</sys_created_on>
+        <sys_id>d68bb647db232300fc201120399619c6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>9a8bf247db232300fc20112039961913</sys_name>
+        <sys_package display_value="MyPDFGeneratorTutorial" source="x_237223_mypdfgene">326d57f3db132300fc20112039961901</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFGeneratorTutorial">326d57f3db132300fc20112039961901</sys_scope>
+        <sys_update_name>sys_embedded_help_role_d68bb647db232300fc201120399619c6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-15 15:37:03</sys_updated_on>
+    </sys_embedded_help_role>
+</record_update>
